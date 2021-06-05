@@ -1,12 +1,13 @@
 const age = 18;
 const requiredDoses = 1;
-const date = new Date().toString('dd-MM-yyyy');
+let date = new Date().toString('dd-MM-yyyy');
 const district_id = 584;
 // district id can be found here: https://github.com/bhattbhavesh91/cowin-vaccination-slot-availability/blob/main/district_mapping.csv
 // change above values to see output in browser
 
 let run = true;
 async function getdata() {
+    date = new Date().toString('dd-MM-yyyy');
     let abc = await fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${district_id}&date=${date}`)
 
     let response = await abc.json();
