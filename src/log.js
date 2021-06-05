@@ -6,7 +6,7 @@
 // // change above values to see output in browser
 
 // // let run = true;
-async function getdata() {
+async function logdata() {
     let abc = await fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${district_id}&date=${date}`)
 
     let response = await abc.json();
@@ -66,9 +66,9 @@ async function getdata() {
 
 }
 
-getdata();
-async function repeat() {
-    await getdata()
+logdata();
+async function repeatLog() {
+    await logdata()
 }
-setInterval(repeat, 1000 * 60 * 5);
+setInterval(repeatLog, 1000 * 60 * 5);
 

@@ -7,6 +7,7 @@ const district_id = 584;
 
 let run = true;
 async function getdata() {
+    // console.log("Running")
     date = new Date().toString('dd-MM-yyyy');
     let abc = await fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${district_id}&date=${date}`)
 
@@ -31,12 +32,12 @@ async function getdata() {
             div.innerHTML +=
                 `
             <tr>
-            <td rowspan="${sessLen}">${data.name}</td>
-            <td rowspan="${sessLen}">${data.district_name}</td>
-            <td>${data.sessions[0].date}</td>
-            <td>${data.sessions[0].available_capacity_dose1}</td>
-            <td>${data.sessions[0].slots.join("<br> <br>")}</td>
-        </tr>
+                <td rowspan="${sessLen}">${data.name}</td>
+                <td rowspan="${sessLen}">${data.district_name}</td>
+                <td>${data.sessions[0].date}</td>
+                <td>${data.sessions[0].available_capacity_dose1}</td>
+                <td>${data.sessions[0].slots.join("<br> <br>")}</td>
+            </tr>
 
             `
 
@@ -46,10 +47,10 @@ async function getdata() {
                     div.innerHTML +=
                         `
                     <tr>
-                    <td>${data.sessions[i].date}</td>
-                    <td>${data.sessions[i].available_capacity_dose1}</td>
-                    <td>${data.sessions[i].slots.join("<br> <br>")}</td>
-                </tr>
+                        <td>${data.sessions[i].date}</td>
+                        <td>${data.sessions[i].available_capacity_dose1}</td>
+                        <td>${data.sessions[i].slots.join("<br> <br>")}</td>
+                    </tr>
             
             `
 
@@ -58,6 +59,23 @@ async function getdata() {
         })
 
         run = false;
+
+        // play notificiation sound - reference: https://github.com/goldfire/howler.js/
+        // sound source: https://notificationsounds.com/notification-sounds/goes-without-saying-608
+        var sound = new Howl({
+            // src: ['goes-without-saying-608.mp3']
+            src: ['alarm-buzzer-407.mp3']
+        });
+
+        sound.play();
+        // console.log("ABC")
+
+        // // in the js code unmute the audio once the event happened
+        // document.getElementById('notificationAudio').muted = false;
+        // document.getElementById('notificationAudio').play();
+
+        await new Promise(resolve => setTimeout(resolve, 5000)); // 3 sec
+
         alert("Dose Available")
         run = true;
     }
