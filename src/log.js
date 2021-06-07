@@ -7,7 +7,10 @@
 
 // // let run = true;
 async function logdata() {
-    let abc = await fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${district_id}&date=${date}`)
+    if(!localStorage.getItem("district_id")) {
+        localStorage.setItem("district_id",district_id);
+    }
+    let abc = await fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${localStorage.getItem("district_id")}&date=${date}`)
 
     let response = await abc.json();
     let data18exists = response.centers.filter(x => x.sessions.filter(y => y.min_age_limit == age).length)
@@ -64,6 +67,48 @@ async function logdata() {
     a.href = window.URL.createObjectURL(bb);
     a.click();
 
+    if(onlyData18And1stDoseFilter.length) {
+        showNotification();
+    }
+
+}
+
+function showNotification() {
+    if (!("Notification" in window)) {
+        alert("This browser does not support desktop notification");
+    }
+    // Let's check whether notification permissions have already been granted
+    else if (Notification.permission === "granted") {
+        // If it's okay let's create a notification
+        var options = {
+            body: 'Click to navigate to covin portal',
+            vibrate: [200, 100, 200]
+        }
+        var notification = new Notification("Dose Available",options);
+        notification.onclick = function(event) {
+            event.preventDefault(); // prevent the browser from focusing the Notification's tab
+            window.open('https://selfregistration.cowin.gov.in/', '_blank');
+        }
+        // console.log("notif",notification);
+    }
+    // Otherwise, we need to ask the user for permission
+    else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(function (permission) {
+            // If the user accepts, let's create a notification
+            if (permission === "granted") {
+                var options = {
+                    body: 'Click to navigate to covin portal',
+                    vibrate: [200, 100, 200]
+                }
+                var notification = new Notification("Dose Available",options);
+                notification.onclick = function(event) {
+                    event.preventDefault(); // prevent the browser from focusing the Notification's tab
+                    window.open('https://selfregistration.cowin.gov.in/', '_blank');
+                }
+                // console.log("notif",notification);
+            }
+        });
+    }
 }
 
 logdata();

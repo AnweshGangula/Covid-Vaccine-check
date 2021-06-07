@@ -5,11 +5,22 @@ const district_id = 589; // (jagtial: 584, Karimnagar: 589)
 // district id can be found here: https://github.com/bhattbhavesh91/cowin-vaccination-slot-availability/blob/main/district_mapping.csv
 // change above values to see output in browser
 
+function loadData() {
+    document.getElementById("filter").innerHTML = '<label>District Id : </label>'+
+    '<select id="district_id" name="district_id" onchange="valueSelected()">'+
+        '<option value="589"' + (localStorage.getItem('district_id')=="589"?'selected':'') + '>Karimnagar</option>'+
+        '<option value="584"' + (localStorage.getItem('district_id')=="584"?'selected':'') + '>Jagityal</option>'+
+    '</select>'
+}
+
 let run = true;
 async function getdata() {
+    if(!localStorage.getItem("district_id")) {
+        localStorage.setItem("district_id",district_id);
+    }
     // console.log("Running")
     date = new Date().toString('dd-MM-yyyy');
-    let abc = await fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${district_id}&date=${date}`)
+    let abc = await fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${localStorage.getItem("district_id")}&date=${date}`)
 
     let response = await abc.json();
     let data18exists = response.centers.filter(x => x.sessions.filter(y => y.min_age_limit == age).length)
@@ -90,3 +101,7 @@ async function repeat() {
 }
 setInterval(repeat, 1000 * 60 * 5);
 
+function valueSelected() {
+    localStorage.setItem("district_id",document.forms["filter"]['district_id'].value);
+    window.location.reload();
+}
