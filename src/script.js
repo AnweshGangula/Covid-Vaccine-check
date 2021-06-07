@@ -1,7 +1,7 @@
 const age = 18;
 const requiredDoses = 1;
 let date = new Date().toString('dd-MM-yyyy');
-const district_id = 584;
+const district_id = 589; // (jagtial: 584, Karimnagar: 589)
 // district id can be found here: https://github.com/bhattbhavesh91/cowin-vaccination-slot-availability/blob/main/district_mapping.csv
 // change above values to see output in browser
 
@@ -67,14 +67,15 @@ async function getdata() {
             src: ['alarm-buzzer-407.mp3']
         });
 
-        sound.play();
+        var id1 = sound.play();
+        sound.fade(0, 1, 5000, id1);
         // console.log("ABC")
 
         // // in the js code unmute the audio once the event happened
         // document.getElementById('notificationAudio').muted = false;
         // document.getElementById('notificationAudio').play();
 
-        await new Promise(resolve => setTimeout(resolve, 5000)); // 3 sec
+        await new Promise(resolve => setTimeout(resolve, 10000)); // 3 sec
 
         alert("Dose Available")
         run = true;

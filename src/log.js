@@ -1,7 +1,7 @@
 // const age = 18;
 // const requiredDoses = 1;
 // const date = new Date().toString('dd-MM-yyyy');
-// const district_id = 584;
+// const district_id = 584; (jagtial: 584, Karimnagar: 589)
 // // district id can be found here: https://github.com/bhattbhavesh91/cowin-vaccination-slot-availability/blob/main/district_mapping.csv
 // // change above values to see output in browser
 
