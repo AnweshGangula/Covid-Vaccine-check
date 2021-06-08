@@ -99,7 +99,7 @@ async function repeat() {
     if (run)
         await getdata()
 }
-setInterval(repeat, 1000 * 60 * 5);
+setInterval(repeat, 1000 * 60 * 2);
 
 function valueSelected() {
     localStorage.setItem("district_id",document.forms["filter"]['district_id'].value);

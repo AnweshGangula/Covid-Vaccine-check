@@ -115,5 +115,5 @@ logdata();
 async function repeatLog() {
     await logdata()
 }
-setInterval(repeatLog, 1000 * 60 * 5);
+setInterval(repeatLog, 1000 * 60 * 2);
 
