@@ -1,22 +1,37 @@
-const age = 18;
-const requiredDoses = 1;
+let age = 18;
+let interval = 5;
+let requiredDoses = 1;
 let date = new Date().toString('dd-MM-yyyy');
-const district_id = 589; // (jagtial: 584, Karimnagar: 589)
+let district_id = 589; // (jagtial: 584, Karimnagar: 589)
 // district id can be found here: https://github.com/bhattbhavesh91/cowin-vaccination-slot-availability/blob/main/district_mapping.csv
 // change above values to see output in browser
 
 function loadData() {
     document.getElementById("filter").innerHTML = '<label>District Id : </label>'+
-    '<select id="district_id" name="district_id" onchange="valueSelected()">'+
+    '<select id="district_id" name="district_id">'+
         '<option value="589"' + (localStorage.getItem('district_id')=="589"?'selected':'') + '>Karimnagar</option>'+
         '<option value="584"' + (localStorage.getItem('district_id')=="584"?'selected':'') + '>Jagityal</option>'+
-    '</select>'
+    '</select>'+
+    '<label>Age : </label>'+
+    '<select id="age" name="age">'+
+        '<option value="18"' + (localStorage.getItem('age')=="18"?'selected':'') + '>18</option>'+
+        '<option value="45"' + (localStorage.getItem('age')=="45"?'selected':'') + '>45</option>'+
+    '</select>'+
+    '<label>Time Interval : </label>'+
+    '<input name="interval" type="number" placeholder="Default 5" value="' + localStorage.getItem("interval") + '">'+
+    '<input type="submit" form="filter" value="search">'
 }
 
 let run = true;
 async function getdata() {
     if(!localStorage.getItem("district_id")) {
         localStorage.setItem("district_id",district_id);
+    }
+    if(!localStorage.getItem("age")) {
+        localStorage.setItem("age",age);
+    }
+    if(!localStorage.getItem("interval")) {
+        localStorage.setItem("interval",interval);
     }
     // console.log("Running")
     date = new Date().toString('dd-MM-yyyy');
@@ -71,24 +86,24 @@ async function getdata() {
 
         run = false;
 
-        // play notificiation sound - reference: https://github.com/goldfire/howler.js/
-        // sound source: https://notificationsounds.com/notification-sounds/goes-without-saying-608
-        var sound = new Howl({
-            // src: ['goes-without-saying-608.mp3']
-            src: ['alarm-buzzer-407.mp3']
-        });
+        // // play notificiation sound - reference: https://github.com/goldfire/howler.js/
+        // // sound source: https://notificationsounds.com/notification-sounds/goes-without-saying-608
+        // var sound = new Howl({
+        //     // src: ['goes-without-saying-608.mp3']
+        //     src: ['alarm-buzzer-407.mp3']
+        // });
 
-        var id1 = sound.play();
-        sound.fade(0, 1, 5000, id1);
-        // console.log("ABC")
+        // var id1 = sound.play();
+        // sound.fade(0, 1, 5000, id1);
+        // // console.log("ABC")
 
-        // // in the js code unmute the audio once the event happened
-        // document.getElementById('notificationAudio').muted = false;
-        // document.getElementById('notificationAudio').play();
+        // // // in the js code unmute the audio once the event happened
+        // // document.getElementById('notificationAudio').muted = false;
+        // // document.getElementById('notificationAudio').play();
 
-        await new Promise(resolve => setTimeout(resolve, 10000)); // 3 sec
+        // await new Promise(resolve => setTimeout(resolve, 10000)); // 3 sec
 
-        alert("Dose Available")
+        // alert("Dose Available")
         run = true;
     }
 
@@ -99,9 +114,14 @@ async function repeat() {
     if (run)
         await getdata()
 }
-setInterval(repeat, 1000 * 60 * 2);
+setInterval(repeat, 1000 * 60 * (localStorage.getItem("interval")?localStorage.getItem("interval"):interval));
 
 function valueSelected() {
     localStorage.setItem("district_id",document.forms["filter"]['district_id'].value);
+    localStorage.setItem("district_id",document.forms["filter"]['age'].value);
+    if(document.forms["filter"]['interval'].value)
+        localStorage.setItem("interval",document.forms["filter"]['interval'].value);
+    else
+        localStorage.setItem("interval",interval)
     window.location.reload();
 }

@@ -18,11 +18,11 @@
 </head>
 
 <body onload="loadData()">
-    <form name="filter" id="filter">
+    <form name="filter" method="POST" onsubmit="event.preventDefault();valueSelected()" id="filter">
         
     </form>
     <div id="root">
-        <table style="width:100%">
+        <table style="width:100%;margin-top: 5px;">
             <thead>
                 <tr>
                     <th>Hospital Name</th>
