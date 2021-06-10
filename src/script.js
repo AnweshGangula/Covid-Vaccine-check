@@ -18,7 +18,7 @@ function loadData() {
         '<option value="45"' + (localStorage.getItem('age')=="45"?'selected':'') + '>45</option>'+
     '</select>'+
     '<label>Time Interval : </label>'+
-    '<input name="interval" type="number" placeholder="Default 5" value="' + localStorage.getItem("interval") + '">'+
+    '<input name="interval" type="number" placeholder="Default 5" step="any" value="' + localStorage.getItem("interval") + '">'+
     '<input type="submit" form="filter" value="search">'
 }
 
