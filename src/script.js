@@ -86,24 +86,24 @@ async function getdata() {
 
         run = false;
 
-        // // play notificiation sound - reference: https://github.com/goldfire/howler.js/
-        // // sound source: https://notificationsounds.com/notification-sounds/goes-without-saying-608
-        // var sound = new Howl({
-        //     // src: ['goes-without-saying-608.mp3']
-        //     src: ['alarm-buzzer-407.mp3']
-        // });
+        // play notificiation sound - reference: https://github.com/goldfire/howler.js/
+        // sound source: https://notificationsounds.com/notification-sounds/goes-without-saying-608
+        var sound = new Howl({
+            // src: ['goes-without-saying-608.mp3']
+            src: ['alarm-buzzer-407.mp3']
+        });
 
-        // var id1 = sound.play();
-        // sound.fade(0, 1, 5000, id1);
-        // // console.log("ABC")
+        var id1 = sound.play();
+        sound.fade(0, 1, 5000, id1);
+        // console.log("ABC")
 
-        // // // in the js code unmute the audio once the event happened
-        // // document.getElementById('notificationAudio').muted = false;
-        // // document.getElementById('notificationAudio').play();
+        // // in the js code unmute the audio once the event happened
+        // document.getElementById('notificationAudio').muted = false;
+        // document.getElementById('notificationAudio').play();
 
-        // await new Promise(resolve => setTimeout(resolve, 10000)); // 3 sec
+        await new Promise(resolve => setTimeout(resolve, 10000)); // 3 sec
 
-        // alert("Dose Available")
+        alert("Dose Available")
         run = true;
     }
 
@@ -118,7 +118,7 @@ setInterval(repeat, 1000 * 60 * (localStorage.getItem("interval")?localStorage.g
 
 function valueSelected() {
     localStorage.setItem("district_id",document.forms["filter"]['district_id'].value);
-    localStorage.setItem("district_id",document.forms["filter"]['age'].value);
+    localStorage.setItem("age",document.forms["filter"]['age'].value);
     if(document.forms["filter"]['interval'].value)
         localStorage.setItem("interval",document.forms["filter"]['interval'].value);
     else
